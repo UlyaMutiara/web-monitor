@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MABIM 2 - Alur & Manajemen</title>
+    <link rel="stylesheet" href="../style.css" /> 
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ========================================================================= */
+        /* GLOBAL & BASE STYLES (Diperlukan karena style.css utama tidak terhubung) */
+        /* ========================================================================= */
+        
+        /* Smooth scroll untuk tautan ke #services */
+        html {
+            scroll-behavior: smooth; 
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            /* Background gelap total, plus pattern dot agar futuristik */
+            background: #0d0d0d;
+            color: #e0e0e0;
+            background-image: radial-gradient(#1a1a1a 1px, transparent 0);
+            background-size: 40px 40px;
+        }
+
+        /* ========================================================================= */
+        /* NAVBAR (Presisi dan Aesthetic) */
+        /* ========================================================================= */
+        .navbar {
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 0 40px;
+            background: #0d0d0d;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        #navbar__logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+        }
+
+        #navbar__logo img {
+            height: 45px;
+            width: auto;
+            margin-right: 12px;
+        }
+
+        /* ========================================================================= */
+        /* CARD CONTAINER & MAIN LAYOUT */
+        /* ========================================================================= */
+
+        .card-detail {
+            min-height: calc(100vh - 80px); /* Kurangi tinggi navbar */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .card-detail__container {
+            max-width: 900px;
+            width: 100%;
+            /* Semi-transparan untuk efek glass */
+            background: rgba(18, 18, 18, 0.9);
+            padding: 40px; 
+            border-radius: 20px;
+            
+            /* Glass/Frosted Effect */
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+
+            /* Neon Border Glow (Cyan/Biru) - Selaras dengan FORTRAN */
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.2), 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        /* Judul Utama Materi (MABIM 2) */
+        .card-detail__text h1 {
+            font-size: 3rem; 
+            margin-bottom: 40px; 
+            font-weight: 800;
+
+            /* Neon Text Effect - Merah/Magenta - Selaras dengan KELOMPOK TIGA BELAS */
+            background: linear-gradient(to right, #ff007f, #ff8c7f);
+            -webkit-background-clip: text;
+            color: transparent;
+            text-align: center;
+            text-shadow: 0 0 12px rgba(255, 0, 127, 0.7);
+        }
+
+        /* ========================================================================= */
+        /* ACCORDION (MATERI BOX) STYLES */
+        /* ========================================================================= */
+        
+        .materi-box {
+            background: #1e1e1e;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Aktifkan glow pada box yang sedang terbuka (Biru/Cyan) */
+        .materi-box.active {
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+            border-color: #00c6ff;
+        }
+
+        /* Judul Accordion (Alur Advokasi, Manajemen Waktu) */
+        .materi-title {
+            padding: 20px 25px;
+            cursor: pointer;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #00c6ff; /* Warna Neon Biru */
+            background: #252525;
+            transition: background 0.3s, color 0.3s;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .materi-title:hover {
+            background: #333333;
+            color: #ff8c7f; /* Efek hover berubah warna */
+        }
+        
+        /* Konten Accordion */
+        .materi-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out, padding 0.3s ease;
+            padding: 0 25px;
+            background: #181818;
+        }
+
+        .materi-content p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #c0c0c0;
+            margin: 20px 0;
+        }
+
+        .materi-box.active .materi-content {
+            max-height: 800px; 
+            padding: 15px 25px;
+        }
+
+        /* ========================================================================= */
+        /* TOMBOL BACK TO CONTENT */
+        /* ========================================================================= */
+        
+        .card-detail__text a {
+            /* Flex untuk meratakan ikon panah */
+            display: inline-flex; 
+            align-items: center;
+            gap: 10px; 
+            padding: 15px 30px; 
+            font-size: 1.1rem;
+            font-weight: 600;
+
+            /* Gradient & Shadow (Magenta/Merah) */
+            background: linear-gradient(to right, #ff007f, #ff8c7f);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 10px; 
+            box-shadow: 0 4px 15px rgba(255, 0, 127, 0.5); 
+            transition: all 0.3s;
+            margin-top: 40px; 
+        }
+
+        .card-detail__text a:hover {
+            /* Warna hover Biru/Cyan */
+            background: linear-gradient(to right, #00c6ff, #0072ff); 
+            transform: translateY(-3px);
+            box-shadow: 0 4px 20px rgba(0, 200, 255, 0.7);
+        }
+
+    </style>
+</head>
+<body>
+<nav class="navbar">
+  <div class="navbar__container">
+    <a href="../index.html" id="navbar__logo">
+      <img src="../images/fortran.png" alt="Logo">
+    </a>
+  </div>
+</nav>
+
+<section class="card-detail">
+  <div class="card-detail__container">
+    <div class="card-detail__text">
+      <h1>MABIM 2</h1>
+
+            <div class="materi-box">
+        <div class="materi-title">Alur Advokasi</div>
+        <div class="materi-content">
+          <p>
+            Materi ini menjelaskan langkah-langkah advokasi mahasiswa untuk menyuarakan aspirasi 
+            dengan cara yang benar, mulai dari identifikasi masalah, penyusunan strategi, 
+            hingga implementasi solusi. Advokasi yang baik harus berbasis data, etis, 
+            dan bertujuan untuk kepentingan bersama.
+          </p>
+        </div>
+      </div>
+
+      <div class="materi-box">
+        <div class="materi-title">Manajemen Waktu</div>
+        <div class="materi-content">
+          <p>
+            Mahasiswa perlu belajar mengatur waktu secara efektif antara akademik, organisasi, 
+            dan kehidupan pribadi. Materi ini membekali keterampilan dalam membuat prioritas, 
+            mengelola jadwal, serta disiplin terhadap target yang telah ditetapkan.
+          </p>
+        </div>
+      </div>
+
+            <a href="../index.html#services">← Back to Content</a>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Script Accordion
+  const materiBoxes = document.querySelectorAll(".materi-box");
+
+  materiBoxes.forEach((box) => {
+    const title = box.querySelector(".materi-title");
+    title.addEventListener("click", () => {
+      // Tutup semua box lain sebelum membuka yang baru
+      materiBoxes.forEach(item => {
+        if (item !== box) {
+          item.classList.remove("active");
+        }
+      });
+      box.classList.toggle("active");
+    });
+  });
+</script>
+</body>
+</html>
